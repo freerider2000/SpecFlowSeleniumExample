@@ -15,7 +15,7 @@ namespace SpecFlowTemplate_dotnet_framework.Framework
 		[ScenarioDependencies]
 		public static ContainerBuilder CreateAutoFacContainerBuilder()
 		{
-			var builder = CreateAutoFacContainerBuilder();
+			var builder = CreateContainerBuilder();
 
 			builder.RegisterTypes(typeof(TestDependencies).Assembly.GetTypes().Where(TypesAreBindings).ToArray())
 				.SingleInstance();
@@ -28,12 +28,11 @@ namespace SpecFlowTemplate_dotnet_framework.Framework
 			return Attribute.IsDefined(type, typeof(BindingAttribute));
 		}
 
-		private static ContainerBuilder createContainerBuilder()
+		private static ContainerBuilder CreateContainerBuilder()
 		{
 			var builder = new ContainerBuilder();
 
-			var webPages = Assembly.GetExecutingAssembly().GetTypes()
-				.Where(type => type.IsAssignableTo<WebPage>()).ToArray();
+			var webPages = Assembly.GetExecutingAssembly().GetTypes().Where(type => type.IsAssignableTo<WebPage>()).ToArray();
 
 			builder.RegisterTypes(webPages).SingleInstance().OnActivated(SetWebDriverInstance);
 

@@ -12,5 +12,5 @@ Then Each of the results should contain the <topic>
 Examples: 
 | topic   |
 | testing |
-| weather |
+| running |
  

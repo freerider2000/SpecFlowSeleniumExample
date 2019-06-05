@@ -23,9 +23,6 @@ namespace SpecFlowTemplate_dotnet_framework.Framework
 		static SeleniumWebDriverFactory()
 		{
 			var chromeOptions = new ChromeOptions { };
-			chromeOptions.BinaryLocation = AppConfig.ChromiumBinaryLocation;
-			Console.WriteLine("############### ChromiumBinaryLocation:" + AppConfig.ChromiumBinaryLocation);
-			Console.WriteLine(File.Exists(AppConfig.ChromiumBinaryLocation) ? "File exists!" : "File does not exist");
 			WebDriver = new ChromeDriver(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), chromeOptions);
 		}
 

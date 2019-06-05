@@ -2,48 +2,48 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using OpenQA.Selenium;
+using SpecFlowTemplate_dotnet_framework.Models;
 using TechTalk.SpecFlow;
+using FluentAssertions;
 
 namespace SpecFlowTemplate_dotnet_framework.Steps
 {
 	[Binding]
-	public sealed class GoogleSearchSteps
+	internal sealed class GoogleSearchSteps
 	{
-		// For additional details on SpecFlow step definitions see https://go.specflow.org/doc-stepdef
-
+	
 		private readonly ScenarioContext context;
 
-		public GoogleSearchSteps(ScenarioContext injectedContext)
+		private readonly GoogleSearchPage _googleSearchPage;
+
+		public GoogleSearchSteps(ScenarioContext injectedContext, GoogleSearchPage googleSearchPage)
 		{
 			context = injectedContext;
+			_googleSearchPage = googleSearchPage;
 		}
 
-		[Given("I have entered (.*) into the calculator")]
-		public void GivenIHaveEnteredSomethingIntoTheCalculator(int number)
+		[Given(@"I am on the Google home page")]
+		public void GivenIAmOnTheGoogleHomePage()
 		{
-			//TODO: implement arrange (precondition) logic
-			// For storing and retrieving scenario-specific data see https://go.specflow.org/doc-sharingdata 
-			// To use the multiline text or the table argument of the scenario,
-			// additional string/Table parameters can be defined on the step definition
-			// method. 
-
-			context.Pending();
+			_googleSearchPage.Open();
+			
 		}
 
-		[When("I press add")]
-		public void WhenIPressAdd()
+		[When(@"I search for (.*)")]
+		public void WhenISearchForTesting(string topic)
 		{
-			//TODO: implement act (action) logic
-
-			context.Pending();
+			_googleSearchPage.SearchInputWebElement().SendKeys(topic+Keys.Enter);
 		}
 
-		[Then("the result should be (.*) on the screen")]
-		public void ThenTheResultShouldBe(int result)
+		[Then(@"Each of the results should contain the (.*)")]
+		public void ThenEachOfTheResultsShouldContainTheTesting(string topic)
 		{
-			//TODO: implement assert (verification) logic
-
-			context.Pending();
+			
+			_googleSearchPage.SearchResultsBlockWebElement().GetAttribute("textContent").Should().Contain(topic);
 		}
+
+
+
 	}
 }
