@@ -13,4 +13,12 @@ Examples:
 | topic   |
 | testing |
 | running |
- 
+
+Scenario Outline: Check that the number of results is returned
+Given I am on the Google home page
+When I search for <topic>
+Then validate the number of results is returned
+
+Examples: 
+| topic   |
+| testing |

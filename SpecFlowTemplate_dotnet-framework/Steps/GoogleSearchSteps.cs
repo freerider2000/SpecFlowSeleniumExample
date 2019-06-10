@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FluentAssertions;
 using OpenQA.Selenium;
 using SpecFlowTemplate_dotnet_framework.Models;
 using TechTalk.SpecFlow;
-using FluentAssertions;
 
 namespace SpecFlowTemplate_dotnet_framework.Steps
 {
@@ -43,7 +43,11 @@ namespace SpecFlowTemplate_dotnet_framework.Steps
 			_googleSearchPage.SearchResultsBlockWebElement().GetAttribute("textContent").Should().Contain(topic);
 		}
 
-
+		[Then(@"validate the number of results is returned")]
+		public void ThenValidateTheNumberOfResultsIsReturned()
+		{
+			_googleSearchPage.NoOfSearchResultsReturnedWebElement().Text.Should().Contain("About");
+		}
 
 	}
 }

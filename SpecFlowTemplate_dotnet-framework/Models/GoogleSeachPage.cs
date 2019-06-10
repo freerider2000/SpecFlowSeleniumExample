@@ -24,5 +24,10 @@ namespace SpecFlowTemplate_dotnet_framework.Models
 			return WebDriver.FindElement(By.XPath("//div[contains(@class,'mod')]/div/span/span"));
 		}
 
+		public IWebElement NoOfSearchResultsReturnedWebElement()
+		{
+			return WebDriver.FindElement(By.Id("resultStats"));
+		}
+
 	}
 }
