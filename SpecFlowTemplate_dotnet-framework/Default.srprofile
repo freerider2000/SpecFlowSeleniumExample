@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TestProfile xmlns="http://www.specflow.org/schemas/plus/TestProfile/1.5">
   <Settings projectName="SpecFlowTemplate_dotnet_framework" />
-  <Execution stopAfterFailures="1" testThreadCount="1" testSchedulingMode="Sequential" />
+  <Execution stopAfterFailures="0" testThreadCount="1" testSchedulingMode="Sequential" />
   <!-- For collecting by a SpecRun server update and enable the following element. For using the 
       collected statistics, set testSchedulingMode="Adaptive" attribute on the <Execution> element.
     <Server serverUrl="http://specrunserver:6365" publishResults="true" />
@@ -31,6 +31,12 @@
       <Filter>Browser_Firefox</Filter>
       <DeploymentTransformationSteps>
         <EnvironmentVariable variable="Test_Browser" value="Firefox" />
+      </DeploymentTransformationSteps>
+    </Target>
+    <Target name ="Edge">
+      <Filter>Browser_Edge</Filter>
+      <DeploymentTransformationSteps>
+        <EnvironmentVariable variable="Test_Browser" value="Edge" />
       </DeploymentTransformationSteps>
     </Target>
   </Targets>

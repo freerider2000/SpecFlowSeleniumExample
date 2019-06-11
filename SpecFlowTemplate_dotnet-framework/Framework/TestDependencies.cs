@@ -30,13 +30,14 @@ namespace SpecFlowTemplate_dotnet_framework.Framework
 
 		private static ContainerBuilder CreateContainerBuilder()
 		{
+			Console.WriteLine("*********************** The Tag value is:" + Environment.GetEnvironmentVariable("Test_Browser"));
 			var builder = new ContainerBuilder();
 
 			var webPages = Assembly.GetExecutingAssembly().GetTypes().Where(type => type.IsAssignableTo<WebPage>()).ToArray();
 
 			builder.RegisterTypes(webPages).SingleInstance().OnActivated(SetWebDriverInstance);
 
-			builder.Register(x => SeleniumWebDriverFactory.CreateWebDriver()).As<IWebDriver>().SingleInstance();
+			builder.Register(x => SeleniumWebDriverFactory.CreateWebDriver()).As<IWebDriver>();
 
 			return builder;
 		}

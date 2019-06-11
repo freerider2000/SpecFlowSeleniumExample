@@ -11,6 +11,9 @@ using TechTalk.SpecFlow;
 using System.IO;
 using System.Reflection;
 using System.Threading;
+using OpenQA.Selenium.Edge;
+using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.IE;
 
 
 namespace SpecFlowTemplate_dotnet_framework.Framework
@@ -18,30 +21,51 @@ namespace SpecFlowTemplate_dotnet_framework.Framework
 	[Binding]
 	public static class SeleniumWebDriverFactory
 	{
-		private static readonly IWebDriver WebDriver;
+		private static IWebDriver _webDriver;
 
 		static SeleniumWebDriverFactory()
 		{
-			var chromeOptions = new ChromeOptions { };
-			WebDriver = new ChromeDriver(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), chromeOptions);
+
 		}
 
-		public static IWebDriver CreateWebDriver() => WebDriver;
+		public static IWebDriver CreateWebDriver()
+		{
+			switch (Environment.GetEnvironmentVariable("Test_Browser"))
+			{
+				case "Chrome":
+					var chromeOptions = new ChromeOptions { };
+					_webDriver = new ChromeDriver(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+						chromeOptions);
+					return _webDriver;
+				case "IE":
+					_webDriver = new InternetExplorerDriver(new InternetExplorerOptions {IgnoreZoomLevel = true});
+					return _webDriver;
+				case "Firefox":
+					_webDriver = new FirefoxDriver();
+					return _webDriver;
+				case "Edge":
+					_webDriver = new EdgeDriver();
+					return _webDriver;
+				case string browser: throw new NotSupportedException($"{browser} is not a supported browser");
+				default: throw new NotSupportedException("not supported browser: <null>");
+			}
 
-		[AfterTestRun]
+		}
+
+		[AfterScenario]
 		public static void NukeTheWebDriver()
 		{
-			if (WebDriver == null) return;
+			if (_webDriver == null) return;
 			Thread.Sleep(500);
-			WebDriver.Close();
-			WebDriver.Quit();
-			WebDriver.Dispose();
+			_webDriver.Close();
+			_webDriver.Quit();
+			_webDriver.Dispose();
 		}
 
 		[AfterStep]
 		public static void MakeScreenShotAfterStep()
 		{
-			var takeScreenshot = WebDriver as ITakesScreenshot;
+			var takeScreenshot = _webDriver as ITakesScreenshot;
 
 			if (takeScreenshot != null && ScenarioContext.Current.TestError != null)
 			{
