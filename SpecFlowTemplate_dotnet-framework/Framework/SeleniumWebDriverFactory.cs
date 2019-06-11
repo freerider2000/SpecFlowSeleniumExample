@@ -44,7 +44,7 @@ namespace SpecFlowTemplate_dotnet_framework.Framework
 					_webDriver = new FirefoxDriver();
 					return _webDriver;
 				case "Edge":
-					_webDriver = new EdgeDriver();
+					_webDriver = new EdgeDriver(AppConfig.EdgeDriverBinaryLocation);
 					return _webDriver;
 				case string browser: throw new NotSupportedException($"{browser} is not a supported browser");
 				default: throw new NotSupportedException("not supported browser: <null>");

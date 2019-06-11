@@ -11,6 +11,9 @@ namespace SpecFlowTemplate_dotnet_framework.Framework
 		public static string GoogleSearchUrl => 
 			ConfigurationManager.AppSettings.Get(nameof(GoogleSearchUrl));
 
+		public static string EdgeDriverBinaryLocation => 
+			ConfigurationManager.AppSettings.Get(nameof(EdgeDriverBinaryLocation));
+
 
 
 	}
